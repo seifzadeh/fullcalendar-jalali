@@ -14,7 +14,7 @@ export interface GCalMeta {
 export const eventSourceDef = {
 
   parseMeta(
-    refined: any // wtf -- GCalMeta & { url: string }
+    refined: any, // wtf -- GCalMeta & { url: string }
   ): GCalMeta | null {
     let { googleCalendarId } = refined
 

@@ -139,7 +139,7 @@ function emulateParts(cmdStr: string, outStr: string): Intl.DateTimeFormatPart[]
 }
 
 function getSingleNumberParts(
-  outStr: string
+  outStr: string,
 ): [head: string, numStr: string, tail: string] | undefined {
   const parts = outStr.split(/(\d+)/) // capture group keeps match within parts
 
