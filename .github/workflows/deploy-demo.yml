@@ -31,7 +31,7 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm --filter "fullcalendar..." build
-      - run: cp packages/vanilla/dist/all/global.js demo/fullcalendar.js
+      - run: pnpm demo:prepare
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
