@@ -21,7 +21,7 @@ export class Calendar extends BareCalendar {
       plugins: [
         ...plugins,
         ...(optionOverrides.plugins || []),
-      ]
+      ],
     })
   }
 }

@@ -11,6 +11,9 @@
   "peerDependencies": {
     "temporal-polyfill": "^1.0.1"
   },
+  "dependencies": {
+    "jalaali-js": "^2.0.0"
+  },
   "devDependencies": {
     "@fullcalendar-scripts/standard": "workspace:*",
     "temporal-polyfill": "^1.0.1",

@@ -181,12 +181,16 @@ export class NativeDateFormatter implements DateFormatter {
   private getFormats(context: DateFormattingContext): CachedFormats {
     if (this.cachedContext !== context) {
       const { standardOptions, extendedOptions } = this
+      const { calendarSystem } = context
       const { codes } = context.locale
-      const normalFormat = new Intl.DateTimeFormat(codes, standardOptions)
+      const formatOptions = calendarSystem.name === 'jalali' || calendarSystem.name === 'persian'
+        ? { ...standardOptions, calendar: 'persian' }
+        : standardOptions
+      const normalFormat = new Intl.DateTimeFormat(codes, formatOptions)
       let zeroFormat: Intl.DateTimeFormat | undefined
 
       if (extendedOptions.omitZeroMinute) {
-        const zeroProps = { ...standardOptions }
+        const zeroProps = { ...formatOptions }
         delete zeroProps.minute
         zeroFormat = new Intl.DateTimeFormat(codes, zeroProps)
       }

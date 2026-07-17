@@ -100,7 +100,7 @@ export class Calendar extends CalendarApiImpl {
                 }}
               </CalendarMediaRoot>
             </RenderId.Provider>
-          </StrictMode>
+          </StrictMode>,
         )
       })
     } else if (this.isRendered) {

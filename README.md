@@ -59,6 +59,55 @@ const calendar = new Calendar(calendarEl, {
 calendar.render()
 ```
 
+## Persian (Jalali) calendar
+
+This fork adds a built-in Jalali calendar system. Set `calendarSystem` to
+`'jalali'` (or the `'persian'` alias) to use Jalali date arithmetic, month
+boundaries, navigation, and date formatting. Event inputs and callbacks retain
+the standard Gregorian/ISO FullCalendar date contract.
+
+```js
+const calendar = new Calendar(calendarEl, {
+  calendarSystem: 'jalali',
+  locale: 'fa',
+  direction: 'rtl',
+  firstDay: 6,
+  initialView: 'dayGridMonth',
+  events: [
+    { title: 'جلسه', start: '2026-07-20T10:00:00+03:30' },
+  ],
+})
+```
+
+The implementation is powered by `jalaali-js` and handles Jalali leap years
+and month-length clamping when moving between months or years.
+
+Try the [interactive Jalali calendar demo](https://seifzadeh.github.io/fullcalendar-jalali/). The demo includes:
+
+- month, week, day, and list views in an RTL Persian layout;
+- Jalali navigation and Persian date formatting;
+- adding, moving, and removing events;
+- date and event callbacks with their Gregorian/ISO values shown;
+- responsive layout for desktop and mobile screens.
+
+To run the demo locally after building the vanilla package:
+
+```sh
+pnpm demo:prepare
+cd demo
+python3 -m http.server 8080
+```
+
+Open `http://localhost:8080` in a browser.
+
+### GitHub Pages
+
+The repository includes [`.github/workflows/deploy-demo.yml`](.github/workflows/deploy-demo.yml).
+On every push to `main`, GitHub builds the vanilla bundle, copies it into `demo/`,
+and publishes that directory with GitHub Pages. In the repository settings, set
+**Pages → Build and deployment → Source** to **GitHub Actions**. You can also run
+the workflow manually from the **Actions** tab.
+
 ## Development
 
 You must install this repo with [PNPM](https://pnpm.io/):

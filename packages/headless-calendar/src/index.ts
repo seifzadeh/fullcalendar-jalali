@@ -1,5 +1,6 @@
 export type { CalendarSystem } from './calendar-system'
 export { registerCalendarSystem, createCalendarSystem } from './calendar-system'
+export { isValidJalaliDate } from './jalali-calendar-system'
 
 export type { DateRangeInput, OpenDateRange, DateRange } from './date-range'
 export {

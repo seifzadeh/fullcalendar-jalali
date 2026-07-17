@@ -20,3 +20,24 @@ In its current form, it's being used internally by the `@fullcalendar/core` pack
 - A little bit of cross-framework magic
 
 And more to come!... 👀
+
+## Jalali calendar system
+
+FullCalendar v7 can render a Persian (Jalali) calendar by selecting the built-in
+calendar system. Calendar event inputs and callbacks remain Gregorian ISO dates;
+only calendar arithmetic and displayed date parts use Jalali dates.
+
+```ts
+new Calendar(element, {
+  calendarSystem: 'jalali',
+  locale: 'fa',
+  direction: 'rtl',
+  firstDay: 6,
+  initialView: 'dayGridMonth',
+  events: [{ title: 'Meeting', start: '2026-07-17' }],
+})
+```
+
+The built-in system uses `jalaali-js` for conversion. It supports Jalali month
+lengths and leap years when navigating or calculating visible ranges, while
+preserving FullCalendar's standard event date contract.

@@ -1,3 +1,5 @@
+import './jalali-calendar-system'
+
 import * as ZonedDateTimeFns from 'temporal-polyfill/fns/ZonedDateTime'
 import * as PlainDateTimeFns from 'temporal-polyfill/fns/PlainDateTime'
 import * as InstantFns from 'temporal-polyfill/fns/Instant'
@@ -152,6 +154,7 @@ export class DateEnv {
     let a = this.calendarSystem.markerToArray(marker)
     a[0] += dur.years
     a[1] += dur.months
+    a[2] = Math.min(a[2], this.calendarSystem.getMonthLength(a[0], a[1]))
     a[2] += dur.days
     a[6] += dur.milliseconds
     return this.calendarSystem.arrayToMarker(a)
@@ -169,12 +172,14 @@ export class DateEnv {
   addYears(marker: DateMarker, n: number) {
     let a = this.calendarSystem.markerToArray(marker)
     a[0] += n
+    a[2] = Math.min(a[2], this.calendarSystem.getMonthLength(a[0], a[1]))
     return this.calendarSystem.arrayToMarker(a)
   }
 
   addMonths(marker: DateMarker, n: number) {
     let a = this.calendarSystem.markerToArray(marker)
     a[1] += n
+    a[2] = Math.min(a[2], this.calendarSystem.getMonthLength(a[0], a[1]))
     return this.calendarSystem.arrayToMarker(a)
   }
 
@@ -327,7 +332,7 @@ export class DateEnv {
     return this.calendarSystem.arrayToMarker([
       this.calendarSystem.getMarkerYear(m),
       this.calendarSystem.getMarkerMonth(m),
-      m.getUTCDate() - ((m.getUTCDay() - this.weekDow + 7) % 7),
+      this.calendarSystem.getMarkerDay(m) - ((m.getUTCDay() - this.weekDow + 7) % 7),
     ])
   }
 
