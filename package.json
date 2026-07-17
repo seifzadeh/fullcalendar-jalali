@@ -33,7 +33,7 @@
     "dev": "standard-scripts dev",
     "test": "standard-scripts test",
     "test:dev": "standard-scripts test --dev",
-    "demo:prepare": "cp packages/vanilla/dist/all/global.js demo/fullcalendar.js && cp packages/preact/dist/skeleton.css demo/fullcalendar.css",
+    "demo:prepare": "cp packages/vanilla/dist/all/global.js demo/fullcalendar.js && cp packages/vanilla/dist/themes/classic/global.js demo/fullcalendar-classic-theme.js && cp packages/vanilla/dist/skeleton.css demo/fullcalendar.css && cp packages/vanilla/dist/themes/classic/theme.css demo/fullcalendar-classic-theme.css && cp packages/vanilla/dist/themes/classic/palette.css demo/fullcalendar-classic-palette.css",
     "clean": "standard-scripts clean",
     "ci": "pnpm run lint && pnpm run build && pnpm run test"
   },

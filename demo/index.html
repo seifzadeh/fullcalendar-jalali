@@ -6,7 +6,10 @@
     <meta name="description" content="دموی تعاملی تقویم جلالی برای FullCalendar" />
     <title>FullCalendar — تقویم جلالی</title>
     <link rel="stylesheet" href="./fullcalendar.css" />
+    <link rel="stylesheet" href="./fullcalendar-classic-theme.css" />
+    <link rel="stylesheet" href="./fullcalendar-classic-palette.css" />
     <script src="./fullcalendar.js"></script>
+    <script src="./fullcalendar-classic-theme.js"></script>
     <style>
       :root { color-scheme: light; font-family: Vazirmatn, Tahoma, Arial, sans-serif; color: #172033; background: #eef3f9; }
       * { box-sizing: border-box; }
@@ -35,7 +38,12 @@
       #calendar { min-height: 620px; }
       .fc { --fc-border-color: #e1e8f0; --fc-button-bg-color: #2472a8; --fc-button-border-color: #2472a8; --fc-button-hover-bg-color: #195b89; --fc-today-bg-color: #eaf7f5; }
       .fc .fc-toolbar-title { font-size: 1.2rem; }
-      .fc .fc-event { border: 0; border-radius: 5px; padding: 2px 4px; }
+      .fc .fc-event { border: 0; border-radius: 5px; padding: 3px 6px; font-weight: 700; }
+      .fc .fc-daygrid-event-dot { border-color: currentColor; }
+      .fc .event-meeting { --fc-event-color: #1677ff; background: #1677ff !important; border-color: #1677ff !important; color: #fff !important; }
+      .fc .event-holiday { --fc-event-color: #e74c3c; background: #e74c3c !important; border-color: #e74c3c !important; color: #fff !important; }
+      .fc .event-spanning { --fc-event-color: #8e44ad; background: #8e44ad !important; border-color: #8e44ad !important; color: #fff !important; }
+      .fc .event-meeting *, .fc .event-holiday *, .fc .event-spanning { color: inherit !important; }
       .status { margin-top: 18px; border-radius: 10px; padding: 12px 14px; color: #42526a; background: #f3f7fb; font-size: .86rem; line-height: 1.7; }
       .status code { direction: ltr; unicode-bidi: plaintext; }
       @media (max-width: 800px) { .layout { grid-template-columns: 1fr; margin-top: -72px; } .sidebar { order: 2; } .calendar-card { padding: 14px; } #calendar { min-height: 520px; } .fc .fc-toolbar { flex-direction: column; gap: 10px; } }
@@ -65,14 +73,17 @@
     <script>
       const status = document.querySelector('#status')
       const showStatus = (message) => { status.innerHTML = message }
+      const requestedView = new URLSearchParams(location.search).get('view')
+      const initialView = ['dayGridMonth', 'timeGridWeek', 'timeGridDay', 'listMonth'].includes(requestedView) ? requestedView : 'dayGridMonth'
       const calendar = new FullCalendar.Calendar(document.querySelector('#calendar'), {
         calendarSystem: 'jalali', locale: 'fa', direction: 'rtl', firstDay: 6,
-        initialView: 'dayGridMonth', initialDate: '2026-07-17', editable: true,
+        initialView, initialDate: '2026-07-20', editable: true,
+        themeSystem: 'classic',
         headerToolbar: false, dayMaxEvents: true,
         events: [
-          { id: 'meeting', title: 'جلسه فروش', start: '2026-07-20T10:00:00+03:30', end: '2026-07-20T11:00:00+03:30' },
-          { id: 'holiday', title: 'تعطیلی نمونه', start: '2026-07-23', allDay: true },
-          { id: 'spanning', title: 'رویداد چندروزه', start: '2026-07-18', end: '2026-07-22', allDay: true }
+          { id: 'meeting', title: 'جلسه فروش', start: '2026-07-20T10:00:00+03:30', end: '2026-07-20T11:00:00+03:30', className: 'event-meeting', color: '#1677ff', contrastColor: '#ffffff' },
+          { id: 'holiday', title: 'تعطیلی نمونه', start: '2026-07-23', allDay: true, className: 'event-holiday', color: '#e74c3c', contrastColor: '#ffffff' },
+          { id: 'spanning', title: 'رویداد چندروزه', start: '2026-07-18', end: '2026-07-22', allDay: true, className: 'event-spanning', color: '#8e44ad', contrastColor: '#ffffff' }
         ],
         datesSet(info) { document.querySelector('#title').textContent = info.view.title },
         dateClick(info) { showStatus(`تاریخ انتخاب‌شده در callback: <code>${info.dateStr}</code> (Gregorian/ISO)`) },
@@ -83,7 +94,8 @@
       document.querySelector('#next').onclick = () => calendar.next()
       document.querySelector('#today').onclick = () => calendar.today()
       document.querySelector('#view').onchange = (event) => calendar.changeView(event.target.value)
-      document.querySelector('#event-form').onsubmit = (event) => { event.preventDefault(); const title = document.querySelector('#event-title').value.trim(); const date = document.querySelector('#event-date').value; calendar.addEvent({ title, start: date, color: '#31a89a' }); event.target.reset(); showStatus(`رویداد «${title}» اضافه شد.`) }
+      document.querySelector('#view').value = initialView
+      document.querySelector('#event-form').onsubmit = (event) => { event.preventDefault(); const title = document.querySelector('#event-title').value.trim(); const date = document.querySelector('#event-date').value; calendar.addEvent({ title, start: date, className: 'event-meeting', color: '#1677ff', contrastColor: '#ffffff' }); event.target.reset(); showStatus(`رویداد «${title}» اضافه شد.`) }
       calendar.render()
     </script>
   </body>
