@@ -110,7 +110,7 @@ describe('NativeDateFormatter', () => {
       expect(parts.some((p) => p.type === 'minute')).toBe(true)
     })
 
-    it("downgrades timeZoneName:'long' to 'short' (proven by offset injection activating)", () => {
+    it('downgrades timeZoneName:\'long\' to \'short\' (proven by offset injection activating)', () => {
       // If the downgrade did NOT happen, injectableTz would be undefined and no offset
       // injection would occur — we'd get a long tz name like "Coordinated Universal Time".
       // Seeing "GMT+5" proves both the downgrade and the injection worked.
